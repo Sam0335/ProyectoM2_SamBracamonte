@@ -1,11 +1,15 @@
 openapi: 3.0.3
 info:
-  title: Authors & Posts API
+  title: Mini-Blog API
   version: 1.0.0
-  description: API para autores y posts.
+  description: API REST para autores y posts.
+  contact:
+    name: Sam Bracamonte
+    email: sam.bracamonte3@gmail.com
 servers:
   - url: http://localhost:3000
-    description: Local
+    description: Desarrollo localhost
+  - url: 
 tags:
   - name: Authors
     description: Endpoints de autores

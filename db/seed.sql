@@ -1,6 +1,6 @@
 INSERT INTO authors (name, email, bio) VALUES
-    ('Ara Vega', 'arandela@example.com', 'greatest geometry dash player in the world'),
-    ('Marino Marino', 'marinero@example.com', 'best bejeweled 3 player'),
+    ('Ara Vega', 'arandela@example.com', 'mejor jugador de geometry dash del mundo'),
+    ('Marino Marino', 'marinero@example.com', 'mejor jugador de bejeweled 3'),
     ('Orion Barrionuevo', 'onion@example.com', 'I wont be a rock star, I will be a legend');
 
 INSERT INTO posts (author_id, title, content, published) VALUES
