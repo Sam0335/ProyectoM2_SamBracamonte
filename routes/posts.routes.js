@@ -7,7 +7,7 @@ import {
     remove,
     update,
 } from "../services/postsService.js";
-import { notFound } from "../src/errorHandler.js";
+import { notFound } from "../error/errorHandler.js";
 import { validatePostCreate, validatePostUpdate } from "../middleware/posts.validate.js";
 
 const postsRouter = express.Router();

@@ -1,5 +1,5 @@
 import pool from "../db/config.js";
-import { conflict } from "../src/errorHandler.js";
+import { conflict } from "../error/errorHandler.js";
 
 export async function getAll() {
     const result = await pool.query("SELECT * FROM authors ORDER BY name");

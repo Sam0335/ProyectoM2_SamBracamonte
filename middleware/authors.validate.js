@@ -1,4 +1,4 @@
-import { badRequest } from "../src/errorHandler.js";
+import { badRequest } from "../error/errorHandler.js";
 import { validarEmail, validarNombre } from "./validators.js";
 
 export function validateAuthorCreate(req, res, next) {

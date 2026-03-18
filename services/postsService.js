@@ -1,5 +1,5 @@
 import pool from "../db/config.js";
-import { notFound } from "../src/errorHandler.js";
+import { notFound } from "../error/errorHandler.js";
 
 export async function getAll({ published } = {}) {
     let query = "SELECT * FROM posts";

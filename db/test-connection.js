@@ -5,15 +5,16 @@ async function testConnection() {
         const result = await pool.query("SELECT NOW()");
         console.log("CONEXION EXITOSA");
         console.log("Hora del servidor:", result.rows[0].now);
-        await pool.end();
+
+        const authors = await pool.query("SELECT * FROM authors");
+        console.log(authors.rows);
+        console.log(authors.rowCount);
+        console.log(authors.command);
     } catch (error) {
         console.error("ERROR CONECTANDO:", error.message);
+    } finally {
+        await pool.end();
     }
 }
 
 testConnection();
-
-const result = await pool.query("SELECT * FROM authors");
-console.log(result.rows);
-console.log(result.rowCount);
-console.log(result.command);

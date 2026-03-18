@@ -1,11 +1,39 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, beforeAll, afterAll } from "vitest";
 import request from "supertest";
 import app from "../app.js";
+
+const createdAuthorIds = [];
+const createdPostIds = [];
+
+beforeAll(() => {
+	createdAuthorIds.length = 0;
+	createdPostIds.length = 0;
+});
+
+afterAll(async () => {
+	for (const id of createdPostIds) {
+		try {
+			await request(app).delete(`/api/posts/${id}`);
+		} catch {
+			// ignore cleanup errors
+		}
+	}
+	for (const id of createdAuthorIds) {
+		try {
+			await request(app).delete(`/api/authors/${id}`);
+		} catch {
+			// ignore cleanup errors
+		}
+	}
+});
 
 async function createAuthor() {
 	const response = await request(app)
 		.post("/api/authors")
 		.send({ name: "Autor Posts", email: `posts_${Date.now()}@example.com`, bio: "test" });
+	if (response.body?.id) {
+		createdAuthorIds.push(response.body.id);
+	}
 	return response.body;
 }
 
@@ -13,6 +41,9 @@ async function createPost(authorId) {
 	const response = await request(app)
 		.post("/api/posts")
 		.send({ author_id: authorId, title: "Titulo Test", content: "Contenido Test", published: true });
+	if (response.body?.id) {
+		createdPostIds.push(response.body.id);
+	}
 	return response.body;
 }
 
@@ -68,6 +99,9 @@ describe("POST /posts", () => {
 
 		expect(response.statusCode).toBe(201);
 		expect(response.body).toHaveProperty("id");
+		if (response.body?.id) {
+			createdPostIds.push(response.body.id);
+		}
 		expect(response.body.title).toBe("Nuevo Post");
 	});
 

@@ -6,7 +6,7 @@ import {
     remove,
     update,
 } from "../services/authorsService.js";
-import { notFound } from "../src/errorHandler.js";
+import { notFound } from "../error/errorHandler.js";
 import { validateAuthorCreate, validateAuthorUpdate } from "../middleware/authors.validate.js";
 
 const authorsRouter = express.Router();

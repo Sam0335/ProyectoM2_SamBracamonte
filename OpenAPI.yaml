@@ -6,15 +6,17 @@ info:
   contact:
     name: Sam Bracamonte
     email: sam.bracamonte3@gmail.com
+
 servers:
-  - url: http://localhost:3000
-    description: Desarrollo localhost
-  - url: 
+  - url: https://proyectom2sambracamonte-production.up.railway.app
+    description: Desarrollo deployed railway
+
 tags:
   - name: Authors
     description: Endpoints de autores
   - name: Posts
     description: Endpoints de posts
+
 paths:
   /api/authors:
     get:
@@ -30,6 +32,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Author"
+
     post:
       summary: Crear autor
       tags: [Authors]
@@ -51,6 +54,8 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "409":
           $ref: "#/components/responses/Conflict"
+
+
   /api/authors/{id}:
     get:
       summary: Obtener autor por id
@@ -66,6 +71,7 @@ paths:
                 $ref: "#/components/schemas/Author"
         "404":
           $ref: "#/components/responses/NotFound"
+
     put:
       summary: Actualizar autor
       tags: [Authors]
@@ -90,6 +96,7 @@ paths:
           $ref: "#/components/responses/NotFound"
         "409":
           $ref: "#/components/responses/Conflict"
+
     delete:
       summary: Eliminar autor
       tags: [Authors]
@@ -104,6 +111,7 @@ paths:
                 $ref: "#/components/schemas/Message"
         "404":
           $ref: "#/components/responses/NotFound"
+
   /api/posts:
     get:
       summary: Listar posts
@@ -124,6 +132,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Post"
+
     post:
       summary: Crear post
       tags: [Posts]
@@ -145,6 +154,7 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
+
   /api/posts/author/{authorId}:
     get:
       summary: Listar posts por autor
@@ -162,6 +172,7 @@ paths:
                   $ref: "#/components/schemas/Post"
         "404":
           $ref: "#/components/responses/NotFound"
+
   /api/posts/{id}:
     get:
       summary: Obtener post por id
@@ -177,6 +188,7 @@ paths:
                 $ref: "#/components/schemas/Post"
         "404":
           $ref: "#/components/responses/NotFound"
+
     put:
       summary: Actualizar post
       tags: [Posts]
@@ -199,6 +211,7 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
+
     delete:
       summary: Eliminar post
       tags: [Posts]
@@ -213,8 +226,10 @@ paths:
                 $ref: "#/components/schemas/Message"
         "404":
           $ref: "#/components/responses/NotFound"
+
 components:
   schemas:
+
     Author:
       type: object
       properties:
@@ -228,6 +243,7 @@ components:
           type: string
           nullable: true
       required: [id, name, email]
+
     AuthorCreate:
       type: object
       properties:
@@ -238,6 +254,7 @@ components:
         bio:
           type: string
       required: [name, email]
+
     AuthorUpdate:
       type: object
       properties:
@@ -247,6 +264,7 @@ components:
           type: string
         bio:
           type: string
+
     Post:
       type: object
       properties:
@@ -264,6 +282,7 @@ components:
           type: string
           format: date-time
       required: [id, author_id, title, content, published, created_at]
+
     PostCreate:
       type: object
       properties:
@@ -285,12 +304,14 @@ components:
           type: string
         published:
           type: boolean
+
     Message:
       type: object
       properties:
         message:
           type: string
       required: [message]
+      
     Error:
       type: object
       properties:

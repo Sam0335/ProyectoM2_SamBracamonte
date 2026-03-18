@@ -1,11 +1,30 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, beforeAll, afterAll } from "vitest";
 import request from "supertest";
 import app from "../app.js";
+
+const createdAuthorIds = [];
+
+beforeAll(() => {
+	createdAuthorIds.length = 0;
+});
+
+afterAll(async () => {
+	for (const id of createdAuthorIds) {
+		try {
+			await request(app).delete(`/api/authors/${id}`);
+		} catch {
+			// ignore cleanup errors
+		}
+	}
+});
 
 async function createAuthor() {
 	const response = await request(app)
 		.post("/api/authors")
 		.send({ name: "Autor Test", email: `autor_${Date.now()}@example.com`, bio: "test" });
+	if (response.body?.id) {
+		createdAuthorIds.push(response.body.id);
+	}
 	return response.body;
 }
 
@@ -46,6 +65,9 @@ describe("POST /authors", () => {
 
 		expect(response.statusCode).toBe(201);
 		expect(response.body).toHaveProperty("id");
+		if (response.body?.id) {
+			createdAuthorIds.push(response.body.id);
+		}
 		expect(response.body.name).toBe("Juana Rodriguez");
 	});
 
