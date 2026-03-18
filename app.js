@@ -6,6 +6,17 @@ import { errorHandler, notFound } from "./src/errorHandler.js";
 const app = express();
 
 app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Blog API v2.0',
+    endpoints: {
+      authors: '/api/authors',
+      posts: '/api/posts',
+      docs: '/api-docs'
+    }
+  });
+});
 app.use("/api/authors", authorsRouter);
 app.use("/api/posts", postsRouter);
 
