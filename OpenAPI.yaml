@@ -8,6 +8,8 @@ info:
     email: sam.bracamonte3@gmail.com
 
 servers:
+  - url: http://localhost:3000
+    description: Desarollo local
   - url: https://proyectom2sambracamonte-production.up.railway.app
     description: Desarrollo deployed railway
 
@@ -33,6 +35,22 @@ paths:
                 items:
                   $ref: "#/components/schemas/Author"
 
+  /api/authors/{id}:
+    get:
+      summary: Obtener autor por id
+      tags: [Authors]
+      parameters:
+        - $ref: "#/components/parameters/AuthorId"
+      responses:
+        "200":
+          description: Autor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
     post:
       summary: Crear autor
       tags: [Authors]
@@ -54,23 +72,6 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "409":
           $ref: "#/components/responses/Conflict"
-
-
-  /api/authors/{id}:
-    get:
-      summary: Obtener autor por id
-      tags: [Authors]
-      parameters:
-        - $ref: "#/components/parameters/AuthorId"
-      responses:
-        "200":
-          description: Autor encontrado
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Author"
-        "404":
-          $ref: "#/components/responses/NotFound"
 
     put:
       summary: Actualizar autor
@@ -133,25 +134,19 @@ paths:
                 items:
                   $ref: "#/components/schemas/Post"
 
-    post:
-      summary: Crear post
+  /api/posts/{id}:
+    get:
+      summary: Obtener post por id
       tags: [Posts]
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PostCreate"
+      parameters:
+        - $ref: "#/components/parameters/PostId"
       responses:
-        "201":
-          description: Post creado
+        "200":
+          description: Post encontrado
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Post"
-        "400":
-          $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
 
@@ -173,19 +168,25 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
-  /api/posts/{id}:
-    get:
-      summary: Obtener post por id
+    post:
+      summary: Crear post
       tags: [Posts]
-      parameters:
-        - $ref: "#/components/parameters/PostId"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostCreate"
       responses:
-        "200":
-          description: Post encontrado
+        "201":
+          description: Post creado
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Post"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
 
@@ -295,6 +296,7 @@ components:
         published:
           type: boolean
       required: [author_id, title, content]
+
     PostUpdate:
       type: object
       properties:
@@ -311,7 +313,7 @@ components:
         message:
           type: string
       required: [message]
-      
+
     Error:
       type: object
       properties:
